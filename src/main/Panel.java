@@ -75,7 +75,6 @@ public class Panel extends JPanel implements MouseListener {
 		mineList.add(board[3][0]);
 	}
 
-//	I'll come back later...
 	public void revealMines() {
 		player.win(you, bpane);
 		for (int i = 0; i < mineList.size(); i++) {
