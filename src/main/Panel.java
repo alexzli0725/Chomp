@@ -48,11 +48,9 @@ public class Panel extends JPanel implements MouseListener {
 		for (int r = 0; r < row; r++) {
 			for (int c = 0; c < col; c++) {
 				Tile tile = new Tile(r, c);
-//				add(board[r][c]);
 				board[r][c] = tile;
 				tile.setFocusable(false);
 				tile.addMouseListener(this);
-//				add(tile);
 				cpane.add(tile);
 			}
 		}
@@ -82,35 +80,8 @@ public class Panel extends JPanel implements MouseListener {
 		}
 	}
 
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		// TODO Auto-generated method stub
-//
-//		Button btd = (Button) e.getSource();
-//
-//		for (int r = 0; r < row; r++) {
-//			for (int c = 0; c < col; c++) {
-//				if (board[r][c] == btd) {
-//					
-////					if ()
-//					
-//					you = player.switchSide(you);
-//					System.out.println(you);
-//					board[r][c].setBackground(Color.GREEN);
-//					board[r][c].setFocusable(false);
-//					board[r][c].setEnabled(false);
-//					fillRest(r, c, col);
-//					if (mineList.contains(board[r][c])) {
-//						revealMines();
-//					}
-//				}
-//			}
-//		}
-//	}
-
 	private void fillRest(int r, int c, int col) {
 		// TODO Auto-generated method stub
-//		board[r - 1][c].setBackground(Color.GREEN);;
 		for (int rAlt = r; rAlt >= 0; rAlt--) {
 			for (int cAlt = c; cAlt < col; cAlt++) {
 				board[rAlt][cAlt].setBackground(Color.GREEN);
