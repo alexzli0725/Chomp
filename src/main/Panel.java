@@ -34,6 +34,8 @@ public class Panel extends JPanel implements MouseListener {
 	private Player player;
 
 	private bPanel bpane;
+	private Factory factory;
+	private Tile tile;
 
 	public Panel(cPanel cpane) {
 		setLayout(new BorderLayout());
@@ -44,18 +46,21 @@ public class Panel extends JPanel implements MouseListener {
 
 		you = true;
 		player = new PlayerA(this);
-//
+		
+		factory = new Factory();
+
 		for (int r = 0; r < row; r++) {
 			for (int c = 0; c < col; c++) {
-				Tile tile = new Tile(r, c);
-				board[r][c] = tile;
+
+				tile = factory.create(r, c);
+				board[r][c] = (Tile) tile;
 				tile.setFocusable(false);
 				tile.addMouseListener(this);
 				cpane.add(tile);
 			}
 		}
 		setMines();
-//
+
 		bpane = new bPanel();
 		add(bpane, BorderLayout.SOUTH); // doesn't affect grid size
 
@@ -70,13 +75,13 @@ public class Panel extends JPanel implements MouseListener {
 		mineList.add(board[3][0]);
 	}
 
+//	I'll come back later...
 	public void revealMines() {
 		player.win(you, bpane);
 		for (int i = 0; i < mineList.size(); i++) {
 			Tile tile = mineList.get(i);
-			tile.setBackground(Color.PINK);
+			tile.dothis();
 			tile.setEnabled(false);
-			tile.setFont(new Font("Arial Unicode MS", Font.PLAIN, 45));
 		}
 	}
 
@@ -84,7 +89,7 @@ public class Panel extends JPanel implements MouseListener {
 		// TODO Auto-generated method stub
 		for (int rAlt = r; rAlt >= 0; rAlt--) {
 			for (int cAlt = c; cAlt < col; cAlt++) {
-				board[rAlt][cAlt].setBackground(Color.GREEN);
+				board[rAlt][cAlt].dothis();
 				board[rAlt][cAlt].setEnabled(false);
 			}
 		}
@@ -107,14 +112,8 @@ public class Panel extends JPanel implements MouseListener {
 				return;
 			} else {
 				you = player.switchSide(you, bpane);
-				btd.setBackground(Color.GREEN);
 				btd.setFocusable(false);
 				btd.setEnabled(false);
-//				if (you) {
-//					bpane.setLabel("Player A's turn");
-//				} else {
-//					bpane.setLabel("Player B's turn");
-//				}
 			}
 		}
 	}
