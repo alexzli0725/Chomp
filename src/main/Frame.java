@@ -3,49 +3,58 @@ package main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
-public class Frame {
-	JFrame frame;
+public class Frame extends JFrame{
+//	JFrame frame;
 	JPanel panel;
 	JLabel label;
-	JPanel bPanel;
-//	JLabel labeling;
 
-	public Frame(Panel p) {
-		frame = new JFrame("Chomp");
+	private JButton button;
+	
+	Panel p;
+	
+	private cPanel cpane;
 
+	public Frame() {
+		this.setTitle("Chomp");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		label = new JLabel("Minesweeper");
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setFont(new Font("Arial", Font.BOLD, 25));
 		panel = new JPanel();
-		
-		panel.setLayout(new BorderLayout());
 		panel.add(label);
 
-		frame.add(panel, BorderLayout.NORTH);
+		this.add(panel, BorderLayout.NORTH);
+		
+		button = new JButton("Reset");
 
-//		System.out.println(p.you);
+		p = new Panel(cpane);
 		
+		this.add(button, BorderLayout.SOUTH);
+
+		this.setDefaultCloseOperation(3);
+		this.setSize(700, 400);
+		this.add(p, BorderLayout.CENTER);
+
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
 		
-//		labeling = new JLabel("false" + p.you);
-//		labeling.setHorizontalAlignment(JLabel.CENTER);
-//		labeling.setFont(new Font("Arial", Font.BOLD, 25));
-//		bPanel = new JPanel();
-//		
-//		bPanel.setLayout(new BorderLayout());
-//		bPanel.add(labeling);
-//		frame.add(bPanel, BorderLayout.SOUTH);
+		button.addActionListener((ActionEvent e) -> {
+			this.remove(p);
+			p = new Panel(cpane);
+			this.add(p);
+			SwingUtilities.updateComponentTreeUI(this);
+		});
+
 		
-		frame.setDefaultCloseOperation(3);
-		frame.setSize(700, 400);
-		frame.add(p, BorderLayout.CENTER);
-		
-		
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
 	}
+
 }

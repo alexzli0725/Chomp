@@ -8,11 +8,18 @@ public class PlayerB extends Player {
 	}
 
 	@Override
-	boolean switchSide(boolean you) {
+	protected boolean switchSide(boolean you, bPanel bpane) {
 		you = true;
 		// TODO Auto-generated method stub
+		bpane.setLabel("Player A's turn");
 		panel.setPlayer(new PlayerA(panel));
 		return you;
+	}
+
+	@Override
+	void win(boolean you, bPanel bpane) {
+		// TODO Auto-generated method stub
+		bpane.setLabel("Player A wins");
 	}
 
 }

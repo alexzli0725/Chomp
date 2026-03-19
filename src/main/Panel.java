@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -29,39 +30,36 @@ public class Panel extends JPanel implements MouseListener {
 	private Tile[][] board;
 	private List<Tile> mineList;
 
-
 	boolean you;
 	private Player player;
 
-	boolean revealed;
-	JLabel labeling;
+	private bPanel bpane;
 
-	public Panel() {
+	public Panel(cPanel cpane) {
 		setLayout(new BorderLayout());
 		board = new Tile[row][col];
-		JPanel cPanel = new JPanel();
-		GridLayout layout = new GridLayout(row, col);
-		cPanel.setLayout(layout);
-		add(cPanel);
+
+		cpane = new cPanel();
+		add(cpane);
 
 		you = true;
 		player = new PlayerA(this);
-
+//
 		for (int r = 0; r < row; r++) {
 			for (int c = 0; c < col; c++) {
 				Tile tile = new Tile(r, c);
+//				add(board[r][c]);
 				board[r][c] = tile;
 				tile.setFocusable(false);
 				tile.addMouseListener(this);
-				cPanel.add(tile);
+//				add(tile);
+				cpane.add(tile);
 			}
 		}
 		setMines();
-
-		JPanel bPanel = new JPanel(); // defaults to FlowLayout
-		labeling = new JLabel("Player A's turn");
-		bPanel.add(labeling);
-		add(bPanel, BorderLayout.SOUTH); // doesn't affect grid size
+//
+		bpane = new bPanel();
+		add(bpane, BorderLayout.SOUTH); // doesn't affect grid size
 
 	}
 
@@ -75,12 +73,7 @@ public class Panel extends JPanel implements MouseListener {
 	}
 
 	public void revealMines() {
-		revealed = true;
-		if (you) {
-			labeling.setText("Player B wins");
-		} else {
-			labeling.setText("Player A wins");
-		}
+		player.win(you, bpane);
 		for (int i = 0; i < mineList.size(); i++) {
 			Tile tile = mineList.get(i);
 			tile.setBackground(Color.PINK);
@@ -142,15 +135,15 @@ public class Panel extends JPanel implements MouseListener {
 				revealMines();
 				return;
 			} else {
-				you = player.switchSide(you);
+				you = player.switchSide(you, bpane);
 				btd.setBackground(Color.GREEN);
 				btd.setFocusable(false);
 				btd.setEnabled(false);
-				if (you) {
-					labeling.setText("Player A's turn");
-				} else {
-					labeling.setText("Player B's turn");
-				}
+//				if (you) {
+//					bpane.setLabel("Player A's turn");
+//				} else {
+//					bpane.setLabel("Player B's turn");
+//				}
 			}
 		}
 	}

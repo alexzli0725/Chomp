@@ -7,6 +7,8 @@ public abstract class Player {
 		this.panel = panel;
 	}
 
-	abstract boolean switchSide(boolean you);
+	abstract boolean switchSide(boolean you, bPanel bpane);
+	
+	abstract void win(boolean you, bPanel bpane);
 
 }
